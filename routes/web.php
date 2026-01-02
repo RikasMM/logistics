@@ -27,7 +27,9 @@ Route::middleware([
     // Administration
     Route::resource('users', App\Http\Controllers\UserController::class);
     Route::patch('/users/{user}/toggle-status', [App\Http\Controllers\UserController::class, 'toggleStatus'])->name('users.toggle-status');
-    Route::get('/branches', App\Http\Controllers\BranchController::class)->name('branches.index');
+    Route::resource('branches', App\Http\Controllers\BranchController::class);
+    Route::resource('branch-types', App\Http\Controllers\BranchTypeController::class);
+    Route::resource('regions', App\Http\Controllers\RegionController::class);
     Route::resource('roles', App\Http\Controllers\RoleController::class);
     Route::get('/permissions', App\Http\Controllers\PermissionController::class)->name('permissions.index');
     Route::get('/reports', App\Http\Controllers\ReportController::class)->name('reports.index');

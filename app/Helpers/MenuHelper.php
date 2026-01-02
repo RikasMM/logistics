@@ -37,23 +37,29 @@ class MenuHelper
                 'items' => [
                     [
                         'name' => 'Inventory',
-                        'route' => 'inventory.index',
                         'icon' => 'inventory',
-                    ],
-                    [
-                        'name' => 'Incoming Stock',
-                        'route' => 'incoming-stock.index',
-                        'icon' => 'incoming',
-                    ],
-                    [
-                        'name' => 'Outgoing Stock',
-                        'route' => 'outgoing-stock.index',
-                        'icon' => 'outgoing',
-                    ],
-                    [
-                        'name' => 'Stock Adjustments',
-                        'route' => 'stock-adjustments.index',
-                        'icon' => 'adjustments',
+                        'submenu' => [
+                            [
+                                'name' => 'All Inventory',
+                                'route' => 'inventory.index',
+                                'icon' => 'inventory',
+                            ],
+                            [
+                                'name' => 'Incoming Stock',
+                                'route' => 'incoming-stock.index',
+                                'icon' => 'incoming',
+                            ],
+                            [
+                                'name' => 'Outgoing Stock',
+                                'route' => 'outgoing-stock.index',
+                                'icon' => 'outgoing',
+                            ],
+                            [
+                                'name' => 'Stock Adjustments',
+                                'route' => 'stock-adjustments.index',
+                                'icon' => 'adjustments',
+                            ],
+                        ]
                     ],
                 ],
             ],
@@ -62,8 +68,29 @@ class MenuHelper
                 'items' => [
                     [
                         'name' => 'Branch Management',
-                        'route' => 'branches.index',
                         'icon' => 'branch',
+                        'submenu' => [
+                            [
+                                'name' => 'All Branches',
+                                'route' => 'branches.index',
+                                'icon' => 'branch',
+                            ],
+                            [
+                                'name' => 'Add Branch',
+                                'route' => 'branches.create',
+                                'icon' => 'branch',
+                            ],
+                            [
+                                'name' => 'Branch Types',
+                                'route' => 'branch-types.index',
+                                'icon' => 'branch',
+                            ],
+                            [
+                                'name' => 'Regions / Zones',
+                                'route' => 'regions.index',
+                                'icon' => 'branch',
+                            ],
+                        ]
                     ],
                     [
                         'name' => 'Users Management',
@@ -142,8 +169,6 @@ class MenuHelper
             
             'logout' => '<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />',
             
-            'search' => '<path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />',
-            
             'notification' => '<path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />',
             
             'menu' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />',
@@ -181,6 +206,10 @@ class MenuHelper
      */
     public static function routeExists(string $route): bool
     {
+        // If route contains wildcards, it's not a real route name
+        if (str_contains($route, '*')) {
+            return false;
+        }
         return \Route::has($route);
     }
 
